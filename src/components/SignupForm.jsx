@@ -36,7 +36,7 @@ const SignupForm = () => {
 
   return (
     <div className="flex items-center justify-end mx-12">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96 shadow-xl shadow-black">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
           Join The File Flow Beta!
         </h2>
@@ -106,7 +106,7 @@ const SignupForm = () => {
           </div>
           {message &&
             (message.type === "success" ? (
-              <div className="flex flex-col gap-2 w-60 w-full sm:w-72 text-[12px] sm:text-xs z-50">
+              <div className="flex flex-col gap-2 w-full sm:w-72 text-[12px] sm:text-xs z-50">
                 <div className="succsess-alert cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-[#232531] px-[10px]">
                   <div className="flex gap-2">
                     <div className="text-[#2b9875] bg-white/5 backdrop-blur-xl p-1 rounded-lg">
@@ -135,9 +135,47 @@ const SignupForm = () => {
                 </div>
               </div>
             ) : (
-              <h2 className="text-center p-2 mb-4 rounded bg-red-100 text-red-700">
-                {message.text}
-              </h2>
+              <div className="flex flex-col gap-2 w-full sm:w-72 text-[10px] sm:text-xs z-50">
+                <div className="error-alert cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-[#232531] px-[10px]">
+                  <div className="flex gap-2">
+                    <div className="text-[#d65563] bg-white/5 backdrop-blur-xl p-1 rounded-lg">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white">{message.text}</p>
+                    </div>
+                  </div>
+                  <button className="text-gray-600 hover:bg-white/10 p-1 rounded-md transition-colors ease-linear">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             ))}
           {isLoading ? (
             <div className="flex items-center justify-center">
