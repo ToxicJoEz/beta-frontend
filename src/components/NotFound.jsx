@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import bgImage from "../assets/background1.png";
+import Loader from "./Loader";
 
 export default function NotFound() {
   return (

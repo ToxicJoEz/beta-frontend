@@ -1,10 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
-
+import Loader from "./Loader";
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [message, setMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Start with false
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -12,6 +13,7 @@ const SignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Show loader
     try {
       const response = await axios.post(
         "https://fileflow-backend-production.up.railway.app/signup",
@@ -19,7 +21,7 @@ const SignupForm = () => {
       );
       setMessage({
         type: "success",
-        text: "Signup successful! Check your email.",
+        text: "Signup successful!",
       });
       setFormData({ name: "", email: "" });
     } catch (error) {
@@ -27,31 +29,22 @@ const SignupForm = () => {
         type: "error",
         text: "Error signing up. Please try again.",
       });
+    } finally {
+      setIsLoading(false); // Hide loader and show button again
     }
   };
 
   return (
-    <div className="flex items-center justify-end  mx-12">
+    <div className="flex items-center justify-end mx-12">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
           Join The File Flow Beta!
         </h2>
-        {message && (
-          <p
-            className={`text-center p-2 mb-4 rounded ${
-              message.type === "success"
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
-            }`}
-          >
-            {message.text}
-          </p>
-        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
               htmlFor="name-icon"
-              className="block mb-2 mt-6  text-sm font-medium text-gray-900"
+              className="block mb-2 mt-6 text-sm font-medium text-gray-900"
             >
               Name:
             </label>
@@ -111,12 +104,53 @@ const SignupForm = () => {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-secondaryColor py-2 rounded-lg mt-12 btnHover"
-          >
-            Sign Up
-          </button>
+          {message &&
+            (message.type === "success" ? (
+              <div className="flex flex-col gap-2 w-60 w-full sm:w-72 text-[12px] sm:text-xs z-50">
+                <div className="succsess-alert cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-[#232531] px-[10px]">
+                  <div className="flex gap-2">
+                    <div className="text-[#2b9875] bg-white/5 backdrop-blur-xl p-1 rounded-lg">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 12.75 6 6 9-13.5"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white">{message.text}</p>
+                      <p className="text-gray-500">
+                        Details will reach you by email shortly
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <h2 className="text-center p-2 mb-4 rounded bg-red-100 text-red-700">
+                {message.text}
+              </h2>
+            ))}
+          {isLoading ? (
+            <div className="flex items-center justify-center">
+              <Loader />
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-secondaryColor py-2 rounded-lg mt-6 btnHover"
+            >
+              Sign Up
+            </button>
+          )}
         </form>
       </div>
     </div>

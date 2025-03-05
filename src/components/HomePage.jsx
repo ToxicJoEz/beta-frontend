@@ -1,6 +1,7 @@
 import React from "react";
 import SignupForm from "./SignupForm";
 import bgImage from "../assets/background1.png";
+import Loader from "./Loader";
 
 export default function HomePage() {
   return (
